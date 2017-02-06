@@ -30,7 +30,7 @@ int main( int argc, char ** argv )
 
 	if( argc != 3 )
 	{
-		fprintf( stderr, "Error: usage: camfind [camera (L or R)] [datafile]\n" );
+		fprintf( stderr, "Error: usage: lighthousefind [camera (L or R)] [datafile]\n" );
 		exit( -1 );
 	}
 
