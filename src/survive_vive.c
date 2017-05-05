@@ -1260,12 +1260,12 @@ static int LoadConfig( SurviveViveData * sv, SurviveObject * so, int devno, int 
 	char * ct0conf = 0;
 	int len = survive_get_config( &ct0conf, sv, devno, iface, extra_magic );
 printf( "Loading config: %d\n", len );
-#if 0
-	char fname[100];
-	sprintf( fname, "%s_config.json", so->codename );
-	FILE * f = fopen( fname, "w" );
-	fwrite( ct0conf, strlen(ct0conf), 1, f );
-	fclose( f );
+#if 1
+	char fname2[100];
+	sprintf( fname2, "%s_config.json", so->codename );
+	FILE * f2 = fopen( fname2, "w" );
+	fwrite( ct0conf, strlen(ct0conf), 1, f2 );
+	fclose( f2 );
 #endif
 
 	if( len > 0 )

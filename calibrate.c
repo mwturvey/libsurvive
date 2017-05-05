@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <survive.h>
+#include <linmath.h>
 #include <string.h>
 #include <os_generic.h>
 #include "src/survive_cal.h"
@@ -172,6 +173,37 @@ void * GuiThread( void * v )
 
 int main()
 {
+	FLT v1[][3] = {{0,0,1},{0,1,0},{1,0,0},{0,0,-1},{0,-1,0},{-1,0,0},
+	               {0,1,1},{1,1,0},{1,0,1},{0,-1,-1},{-1,-1,0},{-1,0,-1},
+	               {0,-1,1},{-1,1,0},{-1,0,1},{0,1,-1},{1,-1,0},{1,0,-1}};
+
+	for (int i=0; i< sizeof(v1)/(3*sizeof(FLT)); i++)
+	{
+		FLT v2[3] = {0,1,0};
+
+		FLT q[4];
+
+		quatfrom2vectors(q,v1[i],v2);
+
+		FLT v3[3];
+
+		quatrotatevector(v3, q, v1[i]);
+
+		if (FLT_FABS(v1[i][0] - v3[0]) > 0.0000000001)
+		{
+			int a=0;
+		}
+		if (FLT_FABS(v1[i][1] - v3[1]) > 0.0000000001)
+		{
+			int a=0;
+		}
+		if (FLT_FABS(v1[i][2] - v3[2]) > 0.0000000001)
+		{
+			int a=0;
+		}
+
+	}
+
 	ctx = survive_init( 0 );
 
 	uint8_t i =0;

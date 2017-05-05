@@ -1350,7 +1350,7 @@ static Point SolveForLighthouse(FLT posOut[3], FLT quatOut[4], TrackedObject *ob
 	so->OutPose.Rot[2] = newOrientation[2];
 	so->OutPose.Rot[3] = newOrientation[3];
 
-	printf(" <% 04.4f, % 04.4f, % 04.4f >  ", wcPos[0], wcPos[1], wcPos[2]);
+	printf(" <% 04.4f, % 04.4f, % 04.4f >  Orient: <% 04.4f, % 04.4f, % 04.4f, % 04.4f> ", wcPos[0], wcPos[1], wcPos[2], newOrientation[0], newOrientation[1], newOrientation[2], newOrientation[3]);
 
 	if (logFile)
 	{
@@ -1553,9 +1553,14 @@ int PoserTurveyTori( SurviveObject * so, PoserData * poserData )
 
 		// let's get the quaternion that represents this rotation.
 		FLT downQuat[4];
-		FLT negZ[3] = { 0,0,1 };
+		FLT negZ[3] = { 0,0,-1 };
+		FLT accelDown[3];
+
+		accelDown[0] = -td->down[0] ;//-152; //+ 0.2146;
+		accelDown[1] = -td->down[1] ;//+42; - 0.05304;
+		accelDown[2] = -td->down[2] ;//+ 0.1107;
 		//quatfrom2vectors(downQuat, negZ, td->down);
-		quatfrom2vectors(downQuat, td->down, negZ);
+		quatfrom2vectors(downQuat, accelDown, negZ);
 
 		{
 			int sensorCount = 0;
@@ -1620,6 +1625,13 @@ int PoserTurveyTori( SurviveObject * so, PoserData * poserData )
 			FLT pos[3], quat[4];
 
 			SolveForLighthouse(pos, quat, to, so, 0, 1, 1);
+		}
+
+		for (int lh=0; lh < 2; lh++)
+		{
+			//quatrotatevector(so->ctx->bsd[lh].Pose.Pos,downQuat,so->ctx->bsd[lh].Pose.Pos);
+			//quatrotateabout(so->ctx->bsd[lh].Pose.Rot, downQuat, so->ctx->bsd[lh].Pose.Rot);
+			//quatrotateabout(so->ctx->bsd[lh].Pose.Rot, so->ctx->bsd[lh].Pose.Rot, downQuat);
 		}
 
 		free(to);
